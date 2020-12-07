@@ -9,10 +9,10 @@ python3 ipParse.py -f filename --smart
 192.168.1.0 192.168.2.1/24,192.168.3.4-7,192.168.5.1-.192.168.5.34、192.176.34.6\26、192.187.34.2-67，192.111.111.111，192.168.5.1 - 192.168.5.34 192.168.5.1. -- 0192.168.5.34,192.168.5.1--192.168.5.34、1.2.4.5、192.168.5.5-9
 192.168.5.1~192.168.5.34,192.168.5. 1 ~ 192.168.05.0 123.3.3.3. 192.168.5.1~56 192.168.7.1
 """
+import requests
 from gevent import monkey; monkey.patch_socket()
 from gevent.pool import Pool
 import gevent
-import requests
 import re
 import argparse
 import ipaddress
@@ -143,11 +143,12 @@ def smart(ipfile):
 
 def ip_location(ip):
     try:
-        resp=requests.get(f"https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query={str(ip)}&co=&resource_id=5809&t=1600743020566&ie=utf8&oe=gbk&cb=op_aladdin_callback&format=json&tn=baidu&cb=jQuery110208008102506768224_1600742984815&_=1600742984816",verify = False)
+        url = "https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query="+ip+"&co=&resource_id=5809&t=1600743020566&ie=utf8&oe=gbk&cb=op_aladdin_callback&format=json&tn=baidu&cb=jQuery110208008102506768224_1600742984815&_=1600742984816"
+        resp=requests.get(url)
         # print(resp.text)
     except Exception as e:
         # print(e)
-        return "Error: "+e.__class__.__name__
+        return "Error: "+str(e)
     j=json.loads(resp.text[42:-1])
     if len(j['Result'])!=0:
         # print(j['Result'][0]['DisplayData']['resultData']['tplData']['location'])
