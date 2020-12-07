@@ -210,7 +210,9 @@ def extract_host(url):
     url=url.strip()
     if (not url.startswith("http") and not url.startswith("//")):
         url="https://"+url
-    return urllib.parse.splitport(urllib.parse.urlparse(url)[1])[0]
+
+    # print(urllib.parse.urlparse(url)[1])
+    return urllib.parse.urlparse(url)[1]
 
 my_resolver = dns.resolver.Resolver()
 my_resolver.nameservers = ['8.8.8.8']
@@ -218,7 +220,7 @@ my_resolver.nameservers = ['8.8.8.8']
 def getIP(url):
     host=extract_host(url)
     try:
-       google_record=[rdata.address for rdata in my_resolver.query(host, 'A')]
+       google_record=[rdata.address for rdata in my_resolver.resolve(host, 'A')]
     except Exception as e:
         # print(f"\033[1;31m ERROR: {host} resolve error: {e.__class__.__name__}\033[0m")
         google_record=[]
