@@ -3,8 +3,6 @@ alias iptool="python /Users/cyan/Github/SCRIPT/iptool.py"
 
 alias favicon="python /Users/cyan/Github/FavFreak/favfreak.py"
 
-alias favicon="python /Users/cyan/Github/FavFreak/favfreak.py"
-
 alias dirsearch="python /Users/cyan/Github/dirsearch/dirsearch.py"
 
 alias smuggler="python /Users/cyan/Github/smuggler/smuggler.py"
@@ -14,10 +12,8 @@ alias wxunpack="node /Users/cyan/Tools/wxappUnpacker/wuWxapkg.js"
 alias persionGen="python3 /Users/cyan/Github/RGPerson/RGPerson.py"
 
 alias upper="perl -ne 'print uc'"
-
 alias lower="perl -ne 'print lc'"
-
-alias title_case="python3 -c \"import sys; print(sys.stdin.read().title(),end='')\""
+alias title_case="python3 -c \"import sys; print(sys.stdin.read().title(),end=)\""
 alias pinyin="python3 -c \"from pypinyin import lazy_pinyin;import sys;print(''.join(lazy_pinyin(sys.stdin.read())),end='')\""
 
 export SPRING=/Users/cyan/Github/topNameIntruder/spring-boot.txt
