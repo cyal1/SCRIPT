@@ -23,7 +23,7 @@ if [ "$#" -eq 1 ]; then
 	    printf "OR $0 user.txt pass.txt | ffuf -w -:AUTH -u https://example.org/endpoint -H \"Authorization: Basic AUTH\"">&2
 	    exit 0
 	fi
-    awk -F " |:" '{cmd=sprintf("echo '%s:%s'|tr -d \"\r\n\"|base64",$1,$2);system(cmd);}' $1
+    awk -F " " '{cmd=sprintf("echo '%s:%s'|tr -d \"\r\n\"|base64",$1,$2);system(cmd);}' $1
     # cat /Users/cyan/Github/Web-Fuzzing-Box/Brute/Basic_401_Login.txt|tr "\t" ":"|while read line;do echo $line|tr -d "\r\n"|base64;done;
     exit 0
 fi
