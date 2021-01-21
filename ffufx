@@ -23,9 +23,19 @@ if [ "$#" -eq 1 ]; then
 	    printf "OR $0 user.txt pass.txt | ffuf -w -:AUTH -u https://example.org/endpoint -H \"Authorization: Basic AUTH\"">&2
 	    exit 0
 	fi
-    awk -F " " '{cmd=sprintf("echo '%s:%s'|tr -d \"\r\n\"|base64",$1,$2);system(cmd);}' $1
-    # cat /Users/cyan/Github/Web-Fuzzing-Box/Brute/Basic_401_Login.txt|tr "\t" ":"|while read line;do echo $line|tr -d "\r\n"|base64;done;
-    exit 0
+    # awk -F " |:" '{cmd=sprintf("echo '%s:%s'|tr -d \"\r\n\"|base64",$1,$2);system(cmd);}' $1
+    head -n 1 $1|grep ":" >/dev/null
+    if [ "$?" -eq 0 ];then
+        cat $1|while read line; do printf "%s" "$line"|tr -d "\r\n"|base64;done;
+        exit 0
+    fi
+    head -n 1 $1|grep "\t" >/dev/null
+    if [ "$?" -eq 0 ];then
+        cat $1|tr "\t" ":"|while read line; do printf "%s" "$line"|tr -d "\r\n"|base64;done;
+        exit 0
+    fi
+    printf "Don't know separator FS in %s file\n\n" "$1" >&2
+    exit 1
 fi
 
 if [ "$#" -ne 2 ]; then
