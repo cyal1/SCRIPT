@@ -1,0 +1,21 @@
+net.DailTimeout
+
+错误类型
+
+refuse
+
+timeout
+
+other
+
+tomanyfile
+
+
+
+tomanyfile 需重扫描到没有该错误为止
+
+other 和  timeout 可通过参数指定循环扫描多次，每次去除refuse的
+
+
+
+扫描结果将每个错误端口列表少于20的打印出来
