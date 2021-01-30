@@ -15,6 +15,11 @@ MAX_TIMEOUT = 10
 UPGRADE_ONLY = False
 
 
+
+red = "\x1B[31m"
+clear = "\x1b[0m"
+
+
 def handle_events(events, isVerbose):
     for event in events:
         if isinstance(event, ResponseReceived):
@@ -200,7 +205,7 @@ def main(args):
 
     print("[INFO] h2c stream established successfully.")
     if args.test:
-        print("[INFO] Success! " + args.proxy + " can be used for tunneling")
+        print(red+"[INFO] Success! " + args.proxy + " can be used for tunneling"+clear)
         sys.exit(0)
 
     # Step 5: Immediately send the pending HTTP/2 data.
@@ -276,7 +281,7 @@ def scan(line):
         if not success:
             return
 
-        print("[INFO] Success! " + line + " can be used for tunneling")
+        print(red+"[INFO] Success! " + line + " can be used for tunneling"+clear)
         sys.stdout.flush()
     except Exception as e:
         print("[ERROR] " + e.__str__() + ": " + line, file=sys.stderr)
