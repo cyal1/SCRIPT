@@ -3,6 +3,9 @@
 ``family`` parameter to all HTTP request operations that may be used to restrict
 the address family used when resolving a domain-name to an IP address.
 """
+
+## import requests_wrapper as requests  # Use this load the patch
+
 import socket
 
 try:
