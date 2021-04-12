@@ -2,6 +2,10 @@ import requests
 from urllib.parse import urlparse
 
 
+#### https://www.youtube.com/watch?v=hWmXEAi9z5w
+#### https://docs.google.com/presentation/d/1N9Ygrpg0Z-1GFDhLMiG3jJV6B_yGqBk8tuRWO1ZicV8/edit
+
+
 def payloadGen(url):
     u = urlparse(url)
 
