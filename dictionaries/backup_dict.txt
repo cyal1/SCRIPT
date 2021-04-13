@@ -1407,6 +1407,7 @@ all~
 api.tar
 api.tar.gz
 api.zip
+api/swagger-ui.html
 app.cfg
 app.ini
 app.log
@@ -3298,6 +3299,8 @@ source.tar.bz2
 source.tar.gz
 source.xz
 source.zip
+spring-security-oauth-resource/swagger-ui.html
+spring-security-rest/api/swagger-ui.html
 sql.7z
 sql.bak
 sql.bz2
@@ -3368,6 +3371,11 @@ support/support.gz
 support/support.tar
 support/support.tar.gz
 support/support.zip
+sw/swagger-ui.html
+swagger-resources
+swagger-resources/configuration/security
+swagger-resources/configuration/ui
+swagger-ui.html
 sync.sh
 system.7z
 system.bz2
@@ -3432,6 +3440,7 @@ template.tar.bz2
 template.tar.gz
 template.txt
 template.zip
+template/swagger-ui.html
 tencent.pac
 tencent.sql
 tenpay.tar.gz
