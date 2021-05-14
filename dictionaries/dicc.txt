@@ -25,6 +25,7 @@
 .7z
 ._machine.config
 ._web.config
+_utils/
 .abcdefghijklmnop/
 .accdb
 .access

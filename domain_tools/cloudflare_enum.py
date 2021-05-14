@@ -71,7 +71,8 @@ class cloudflare_enum:
             'X-ATOK': self.atok,
         }
         self.s.headers.update( dict( new_headers.items() + self.global_headers.items() ) )
-        r = self.s.post('https://www.cloudflare.com/api/v4/zones', data=json.dumps( post_data ))
+        r = self.s.post('https://dash.cloudflare.com/api/v4/zones', data=json.dumps( post_data ))
+        print r.text
         data = json.loads( r.text )
         success = data['success']
         if not success:

@@ -18,8 +18,13 @@ import argparse
 import ipaddress
 import json
 import dns.resolver
+import logging
 import urllib
 import socket
+import sys
+import os
+import concurrent.futures
+import tldextract
 
 requests.packages.urllib3.disable_warnings()
 
@@ -32,6 +37,7 @@ REG_IP = re.compile(
     r'((([1-9]?\d)|(1\d\d)|(2[0-4]\d)|(25[0-5]))\.){3}(([1-9]?\d)|(1\d\d)|(2[0-4]\d)|(25[0-5]))$')
 REG_IPRANGE = re.compile(
     r'(?P<bd>((([1-9]?\d)|(1\d\d)|(2[0-4]\d)|(25[0-5]))\.){2})(?P<c1>(([1-9]?\d)|(1\d\d)|(2[0-4]\d)|(25[0-5])))\.(?P<d1>(([1-9]?\d)|(1\d\d)|(2[0-4]\d)|(25[0-5])))-(?P=bd)(?P<c2>(([1-9]?\d)|(1\d\d)|(2[0-4]\d)|(25[0-5])))\.(?P<d2>(([1-9]?\d)|(1\d\d)|(2[0-4]\d)|(25[0-5])))$')
+REG_Domain = re.compile(r'^([A-Za-z0-9]\.|[A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9]\.){1,3}[A-Za-z]{2,6}$')
 
 
 def replSpace(rep):
@@ -116,16 +122,16 @@ def ipParse(iplist):
         elif REG_IP.match(item):
             IPLIST.append(item)
         else:
-            print(f'\033[1;31m请检查你的IP:{item}\033[0m')
+            logging.info(f'\033[1;31m请检查你的IP:{item}\033[0m')
     r = list(set(IPLIST))
     r.sort(key=IPLIST.index)
     return r
 
 # 处理无格式 IP 范围文件
-def smart(ipfile):
+def format(ipfile):
     with open(ipfile, encoding="utf-8") as f:
         content = f.read()
-    print("-" * 80)
+    logging.info("-" * 80)
     # 192.168.1.1 -- 254 将不规范的分割符（如： ~~ ~ -- -）全部替换成-,\替换成/
     s1 = re.sub(r'\s*[-~]+\s*', '-', content).replace('\\','/').replace('"','').replace("'",'')
     # 123. 34 .123 . 123 去掉之间多余的空格    -- 如果出错，请注释此行
@@ -136,27 +142,80 @@ def smart(ipfile):
     s1 = re.split(r'[\n\s,，、;；]+', s1) # 以这些符号分隔成列表并去重
     s1 = list({x for x in s1 if x !=''})  
     s1.sort()
-    print(s1)
-    print("-" * 80)
+    logging.info(s1)
+    logging.info("-" * 80)
     for x in ipParse(s1):
         print(x)
 
+
+def dns_record(domain):
+    green = "\x1b[1;32m"
+    cyan = "\x1b[1;36m"
+    clear = "\x1b[0m"
+
+    record_type = ["A","AAAA","CNAME","NS","MX","TXT","SOA","PTR","SPF","SRV","AXFR","IXFR",
+                    "MAILB","URI","HIP","A6","AFSDB","APL","CAA","CDNSKEY","CDS",
+                    "CSYNC","DHCID","DLV","DNAME","DNSKEY","DS","EUI48","EUI64",
+                    "MB","MD","MF","MG","MINFO","MR","NAPTR","NINFO","NSAP","NSEC",
+                    "NSEC3","NSEC3PARAM","NULL","NXT","OPENPGPKEY","OPT","PX","RP",
+                    "RRSIG","RT","SIG","SSHFP","TA","TKEY","TLSA","TSIG",
+                    "GPOS","HINFO","IPSECKEY","ISDN","KEY","KX","LOC","MAILA",
+                    "UNSPEC","WKS","X25","CERT","ATMA","DOA","EID","GID","L32",
+                    "L64","LP","NB","NBSTAT","NID","NIMLOC","NSAP-PTR","RKEY",
+                    "SINK","SMIMEA","SVCB","TALINK","UID","UINFO","ZONEMD","HTTPS"]
+
+    for rt in record_type:
+        try:
+            r = dns.resolver.resolve(domain, rt)
+        except Exception as e:
+            print(rt + "\t" + str(e))
+            # print(e)
+        else:
+            # print(rt)
+            for v in r:
+                print(
+                    green + rt + clear + "\t" +
+                    cyan + str(v) + clear)
+
 def ip_location(ip):
+    # try:
+    #     requests.get(f"https://www.sogou.com/reventondc/external?key={ip}&type=2&charset=utf8&objid=20099801&userarea=d123&uuid=6a3e3dd2-d0cb-440c-ac45-a62125dee188&p_ip=180.101.49.12&callback=sogouCallback1620961932681")
+    # except Exception as e:
+    #     pass
+    # else:
+
+
+    # try:
+    #     requests.get("https://open.onebox.so.com/dataApi?callback=jQuery18301409029392462775_1620962038263&type=ip&src=onebox&tpl=0&num=1&query=ip&ip=180.101.49.12&url=ip&_=1620962046570")
+    # except Exception as e:
+    #     pass
+
+    # try:
+    #     requests.get("https://apiquark.sm.cn/rest?method=sc.number_ip_new&request_sc=shortcut_searcher::number_ip_new&callback=sc_ip_search_callback&q=103.235.46.39&callback=jsonp2")
+    # except Exception as e:
+    #     pass
+
+    # try:
+    #     requests.get("https://so.toutiao.com/2/wap/search/extra/ip_query?ip=103.235.46.39")
+    # except Exception:
+    #     pass
+    ip=ip.strip()
+    # print(ip)
     try:
-        url = "https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query="+ip+"&co=&resource_id=5809&t=1600743020566&ie=utf8&oe=gbk&cb=op_aladdin_callback&format=json&tn=baidu&cb=jQuery110208008102506768224_1600742984815&_=1600742984816"
-        resp=requests.get(url)
+        resp=requests.get(f"https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query=f{ip}&co=&resource_id=5809&t=1600743020566&ie=utf8&oe=gbk&cb=op_aladdin_callback&format=json&tn=baidu&cb=jQuery110208008102506768224_1600742984815&_=1600742984816")
         # print(resp.text)
     except Exception as e:
         # print(e)
-        return "Error: "+str(e)
-    j=json.loads(resp.text[42:-1])
+        return ip, "Error: "+str(e)
+    j = json.loads(resp.text[42:-1])
+    # print(j)
     if len(j['Result'])!=0:
-        # print(j['Result'][0]['DisplayData']['resultData']['tplData']['location'])
-        return j['Result'][0]['DisplayData']['resultData']['tplData']['location']
+        # print(j['Result'][0])
+        return ip, j['Result'][0]['DisplayData']['resultData']['tplData']['location']
     else:
         # print(f"INFO: {ip} {j}")
         # print(j['Result'])
-        return j['Result']
+        return ip, j['Result']
 
 def ip_reverse(ip):
     # https://www.threatcrowd.org/searchApi/v2/ip/report/?ip=
@@ -245,6 +304,17 @@ def sync_getIP(url_list):
         r.append(item.value)
     return r
 
+def getTLD(file):
+    tld_list=set()
+    with open(file,"r") as f:
+        for x in f:
+            if x.strip()!="":
+                tld = tldextract.extract(x).registered_domain
+                if tld!="":
+                    tld_list.add(tld)
+    for x in tld_list:
+        print(x)
+
 def archive(domain_list):
     sigleIP={}
     info_pool=[]
@@ -273,95 +343,144 @@ def archive(domain_list):
     print(f"sudo nmap -Pn -sS -sV -T3 -p1-65535 --open {' '.join([ip for ip in sigleIP.keys()])}")
 
 def sync_ip_location(ip_list):
-    ##iplocation sync
-    loc=lambda ip:(ip,ip_location(ip))
-    p=Pool(THREADS)
-    threads=[p.spawn(loc, i) for i in ip_list]
-    gevent.joinall(threads)
-    for item in threads:
-        print(item.value[0],item.value[1])
-    # for i in ip_list:
-    #     if args.location:
-    #         print(i,ip_location(i))
-    #     else:
-    #         print(i)
-    print(f'\033[0;36m共{len(ip_list)}个IP\033[0m')
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        for ip, located in executor.map(ip_location, ip_list):
+            print(ip, located)
 
 THREADS=None
+logging.basicConfig(format='%(message)s',
+                    level=logging.INFO)
 def main():
-    parser = argparse.ArgumentParser("For ip list:")
-    ip_parser=parser.add_argument_group("For IP list")
-    # parser.description = 'Parse IP range like 192.168.2.3/26 10.0.4.1-10.0.4.9 10.0.0.1-254'
+    Useage = """
+    single
+    # ip    # show local ip
+    # ip 8.8.8.8    # show location && provider
+    # ip www.baidu.com  # show ip and location
+    
+    multi
+    # ip -c 8.8.8.8/24 [--location] # show cidr
+    # ip -f iplist.txt [--format] [--archive] [--tld] [--location]    # list all ip
+    
+    # ip -dns www.baidu.com # check dns
+    # ip --interactive  # show domain or ip location
+    # ip --history 8.8.8.8  # show history domain  TODO
+    """
+
+    argvlen = len(sys.argv)
+    if argvlen == 1:
+        os.system("ifconfig -l | xargs -n1 ipconfig getifaddr")
+        return
+    if argvlen == 2:
+        if REG_IP.match(sys.argv[1]):
+            print("\t".join(ip_location(sys.argv[1])))
+        elif REG_Domain.match(sys.argv[1]):
+            host, ip_list = getIP(sys.argv[1])
+            print(host)
+            for ip in ip_list:
+                print("\t".join(ip_location(ip)))
+        else:
+            print("please provider valid domain or ip")
+        return
+
+    parser = argparse.ArgumentParser()
+    # ip_parser=parser.add_argument_group("For IP list")
+    # # parser.description = 'Parse IP range like 192.168.2.3/26 10.0.4.1-10.0.4.9 10.0.0.1-254'
     group = parser.add_mutually_exclusive_group()
-    domain_parser=parser.add_argument_group("For domain list")
-    reverse_parser=parser.add_argument_group("Reverse IP")
+    # domain_parser=parser.add_argument_group("For domain list")
+    # reverse_parser=parser.add_argument_group("Reverse IP")
     group.add_argument("-f", '--file', help="The file containing a list of IPs or domains")
     group.add_argument("-c", '--cidr', help="Command line read a domains,IP or CIDR like 192.168.2.3/26,10.0.0.1-254,10.0.4.1-10.0.4.9")
-    ip_parser.add_argument('--location', action="store_true", help="The location of IP")
-    parser.add_argument('-t', "--threads", type=int, default=20, help="Number of threads（default 20）")
-    ip_parser.add_argument('--smart', action="store_true", help="Automatic analysis of messy file containing IPs")
-    domain_parser.add_argument('--ip', action="store_true", help="show IP of domain")
-    reverse_parser.add_argument('--interactive', action="store_true", help="open an interactive to get domain history of IP")
-    domain_parser.add_argument('--archive', action="store_true", help="Archive IP and domain")
+    group.add_argument("-dns", '--dns', help="Show dns record of domain")
+    parser.add_argument('--location', action="store_true", help="The location of IP")
+    # parser.add_argument('-t', "--threads", type=int, default=20, help="Number of threads（default 20）")
+    parser.add_argument('--format', action="store_true", help="Automatic analysis of messy file containing IPs")
+    parser.add_argument('--tld', action="store_true", help="Show TLD of domain")
+    # domain_parser.add_argument('--ip', action="store_true", help="show IP of domain")
+    # reverse_parser.add_argument('--interactive', action="store_true", help="open an interactive to get domain history of IP")
+    # domain_parser.add_argument('--archive', action="store_true", help="Archive IP and domain")
     args = parser.parse_args()
-    if args.interactive:
-        interactive_ip_reverse()
-    if not args.file and not args.cidr:
-        print("The argument requires the -f or -c")
-        exit(1)
-    if args.archive and not args.ip:
-        print("The --archive argument requires the --ip")
-        exit(1)
-    if args.smart and not args.file:
-        print("The --smart argument requires the -f or --file")
-        exit(1)
-    global THREADS
-    THREADS=args.threads
-    if args.ip:
-        if args.file:
-            if args.archive:
-                # python3 iptool.py -f domain_list.txt --ip --archive
-                with open(args.file, encoding="utf-8") as f:
-                    archive(f.readlines())
-            else:
-                # python3 iptool.py -f domain_list.txt --ip
-                with open(args.file, encoding="utf-8") as f:
-                    for x,y in sync_getIP(f.readlines()):
-                        print(x,y)
-        else:
-            # python3 iptool.py -c www.baidu.com,www.qq.com --ip
-            url_list=args.cidr.strip(',').split(',')
-            for u in url_list:
-                host,ip_list=getIP(u)
-                print(host)
-                for ip in  ip_list:
-                    print(ip,ip_location(ip))
-    elif args.file:
-        if args.smart:
-            # python3 iptool.py -f ip_or_CIDR_messy_list.txt
-            smart(args.file)
-        else:
-            with open(args.file, encoding="utf-8") as f:
-                ip_list=[i.strip() for i in f if i.strip() !='']
-                # ip.sort()
-            if args.location:
-                # python3 iptool.py -f ip_or_CIDR_list.txt --location
-                sync_ip_location(ipParse(ip_list)) # 异步处理
-            else:
-                for x in ipParse(ip_list):
-                        # python3 iptool.py -f ip_or_CIDR_list.txt
-                        print(x)
-    elif args.cidr:
-        ip_list=ipParse(args.cidr.strip(',').split(','))
-        # python3 iptool.py -c 192.168.0.1/24 --location
+    if args.cidr:
+        ip_list = ipParse(args.cidr.strip(',').split(','))
         if args.location:
-            sync_ip_location(ip_list) # 异步处理
+            sync_ip_location(ip_list)
         else:
-            for x in ip_list:
-                    # python3 iptool.py -c 192.168.0.1/24
-                    print(x)
-    else:
-        print('Use -h to show help')
+            print("\n".join(ip_list))
+            logging.info(f'\033[0;36m共{len(ip_list)}个IP\033[0m')
+        return
+    if args.file:
+        if args.format:
+            format(args.file)
+            return
+        if args.tld:
+            getTLD(args.file)
+            return
+        if args.location:
+            with open(args.file, encoding="utf-8") as f:
+                ip_list = f.readlines()
+            print(ip_list)
+            sync_ip_location(ip_list)
+    if args.dns:
+        dns_record(args.dns)
+
+    # if args.interactive:
+    #     interactive_ip_reverse()
+    # if not args.file and not args.cidr:
+    #     print("The argument requires the -f or -c")
+    #     exit(1)
+    # if args.archive and not args.ip:
+    #     print("The --archive argument requires the --ip")
+    #     exit(1)
+    # if args.smart and not args.file:
+    #     print("The --smart argument requires the -f or --file")
+    #     exit(1)
+    # global THREADS
+    # THREADS=args.threads
+    # if args.ip:
+    #     if args.file:
+    #         if args.archive:
+    #             # python3 iptool.py -f domain_list.txt --ip --archive
+    #             with open(args.file, encoding="utf-8") as f:
+    #                 archive(f.readlines())
+    #         else:
+    #             # python3 iptool.py -f domain_list.txt --ip
+    #             with open(args.file, encoding="utf-8") as f:
+    #                 for x,y in sync_getIP(f.readlines()):
+    #                     print(x,y)
+    #     else:
+    #         # python3 iptool.py -c www.baidu.com,www.qq.com --ip
+    #         url_list=args.cidr.strip(',').split(',')
+    #         for u in url_list:
+    #             host,ip_list=getIP(u)
+    #             print(host)
+    #             for ip in  ip_list:
+    #                 print(ip,ip_location(ip))
+    # elif args.file:
+    #     if args.smart:
+    #         # python3 iptool.py -f ip_or_CIDR_messy_list.txt
+    #         smart(args.file)
+    #     else:
+    #         with open(args.file, encoding="utf-8") as f:
+    #             ip_list=[i.strip() for i in f if i.strip() !='']
+    #             # ip.sort()
+    #         if args.location:
+    #             # python3 iptool.py -f ip_or_CIDR_list.txt --location
+    #             sync_ip_location(ipParse(ip_list)) # 异步处理
+    #         else:
+    #             for x in ipParse(ip_list):
+    #                     # python3 iptool.py -f ip_or_CIDR_list.txt
+    #                     print(x)
+    # elif args.cidr:
+    #     ip_list=ipParse(args.cidr.strip(',').split(','))
+    #     # python3 iptool.py -c 192.168.0.1/24 --location
+    #     if args.location:
+    #         sync_ip_location(ip_list) # 异步处理
+    #     else:
+    #         for x in ip_list:
+    #                 # python3 iptool.py -c 192.168.0.1/24
+    #                 print(x)
+    # else:
+    #     print('Use -h to show help')
 
 if __name__ == '__main__':
     main()
