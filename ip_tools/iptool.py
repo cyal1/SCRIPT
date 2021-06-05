@@ -418,7 +418,7 @@ def main():
         if args.location:
             with open(args.file, encoding="utf-8") as f:
                 ip_list = f.readlines()
-            print(ip_list)
+            # print(ip_list)
             sync_ip_location(ip_list)
     if args.dns:
         dns_record(args.dns)

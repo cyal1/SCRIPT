@@ -1,4 +1,5 @@
 123321
+test-123
 changeme
 123456aA.
 12341234
@@ -8,6 +9,7 @@ woshinidie
 www123
 hao123456
 1234554321
+!QAZ2wsx
 1357913579
 0.123456
 baobao
@@ -16,6 +18,7 @@ baobao
 134679258
 wangliang
 16897168
+123qwe@ASD
 000000000
 1314woaini
 loveme
@@ -51,6 +54,7 @@ wang123
 1hxboqg2s
 asd123123
 665544
+Abc123__
 woaini1314520
 520025
 zhang123

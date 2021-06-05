@@ -18,6 +18,7 @@ plugins/PluginConsole.do
 .git/
 .git/config
 .gitignore
+etc/passwd
 .hg/hgrc
 .htaccess
 .htpasswd
@@ -295,6 +296,11 @@ extend/Qcloud/Sms/Sms.php
 f/job.php
 favicon.ico
 fckeditor/_samples/default.html
+fckeditor/_whatsnew.html
+fckeditor/editor/filemanager/browser/default/connectors/test.html
+fckeditor/editor/filemanager/upload/test.html
+fckeditor/editor/filemanager/connectors/test.html
+fckeditor/editor/filemanager/connectors/uploadtest.html
 fgt_lang
 file/fileNoLogin/
 filemanager/upload.php
@@ -321,6 +327,7 @@ h2-console
 haproxy-status
 heapdump
 hedwig.cgi
+hosting/discovery
 help/index.jsp
 hm/login.action
 hmc/hybris
