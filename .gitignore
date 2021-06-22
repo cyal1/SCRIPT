@@ -1,4 +1,5 @@
 *.html
+.idea
 .DS_Store
 *.yaml
 
