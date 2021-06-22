@@ -7,6 +7,7 @@ plugins/PluginConsole.do
 ..;/host-manager/html
 ..;/manager/html
 ./../../../../../../../../../../etc/passwd
+webui/?g=sys_dia_data_down&file_name=../../../../../../../../../../../../etc/passwd
 .bash_history
 .bzr/branch/branch.conf
 .circleci/config.yml
@@ -27,6 +28,7 @@ etc/passwd
 .redmine-cli
 .settings/rules.json
 .svn
+a/sys/register
 .svn/
 .svn/entries
 .svn/prop-base/
@@ -692,11 +694,13 @@ v2/_catalog
 v2/api-docs
 v2/api/product/manger/getInfo
 v2/auth/roles
+v2/keys
 v2/keys/996
 v2/keys/996/997
 vendor/phpunit/phpunit/phpunit
 vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
 verify.php
+version
 version.web
 view/viewer_index.shtml
 views/ajax/autocomplete/user/a

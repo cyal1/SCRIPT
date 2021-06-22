@@ -27,6 +27,7 @@
 ._web.config
 _utils/
 .abcdefghijklmnop/
+a/sys/register
 .accdb
 .access
 .ackrc
@@ -12991,6 +12992,7 @@ webtalk.log
 webticket/
 webticket/webticketservice.svc
 webui/.env
+webui/
 weburi.json
 wechat/
 wechatTrade/
