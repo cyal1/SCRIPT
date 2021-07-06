@@ -23,7 +23,7 @@ USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
              "Chrome/89.0.4389.90 Safari/537.36"
 
 def waf_func(resp, ret):
-    print(resp.content.decode("utf8"))
+    #print(resp.content.decode("utf8"))
     for key in WAF_STRING:
         if key in resp.content.decode("utf8"):
             ret["matched_string"] = key
