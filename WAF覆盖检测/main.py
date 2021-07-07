@@ -7,6 +7,7 @@ import dns.resolver
 import tldextract
 import xlsxwriter
 import time
+import re
 
 requests.packages.urllib3.disable_warnings()
 
@@ -23,7 +24,7 @@ USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
              "Chrome/89.0.4389.90 Safari/537.36"
 
 def waf_func(resp, ret):
-    #print(resp.content.decode("utf8"))
+    # print(resp.content.decode("utf8"))
     for key in WAF_STRING:
         if key in resp.content.decode("utf8"):
             ret["matched_string"] = key
@@ -104,8 +105,16 @@ def send_req(url, ipv6=True):
         )
         sock_ip = resp.raw._connection.sock.getpeername()[0]
     except AttributeError:
-        sock_ip = None
+        sock_ip = None # AttributeError: get socket ip from resp.raw._connection.sock fail
         ret["ns_record"] = ",".join(getipv6(tldextract.extract(url).fqdn)) if ipv6 else ",".join(getipv4(tldextract.extract(url).fqdn))
+    except requests.exceptions.ConnectTimeout as e:
+         ret["ns_record"] = ",".join(getipv6(tldextract.extract(url).fqdn)) if ipv6 else ",".join(getipv4(tldextract.extract(url).fqdn))
+         ret["requests_error"] = e.__class__.__name__
+         return ret
+    except requests.exceptions.ConnectionError as e:
+        ret["ns_record"] = ",".join(getipv6(tldextract.extract(url).fqdn)) if ipv6 else ",".join(getipv4(tldextract.extract(url).fqdn))
+        ret["requests_error"] = re.search(r'\[Errno \d+\][A-Za-z0-9,. ]+',e.__context__.args[-1].__str__())[0]
+        return ret
     except Exception as e:
         ret["ns_record"] = ",".join(getipv6(tldextract.extract(url).fqdn)) if ipv6 else ",".join(getipv4(tldextract.extract(url).fqdn))
         ret["requests_error"] = e.__class__.__name__
