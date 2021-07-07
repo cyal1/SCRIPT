@@ -10,6 +10,8 @@ import time
 import re
 
 requests.packages.urllib3.disable_warnings()
+red = "\x1B[31m"
+clear = "\x1b[0m"
 
 ########################################## config #######################################################
 
@@ -26,7 +28,11 @@ USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
 def waf_func(resp, ret):
     # print(resp.content.decode("utf8"))
     for key in WAF_STRING:
-        if key in resp.content.decode("utf8"):
+        try:
+            content = resp.content.decode("utf8")
+        except Exception:
+            content = resp.content.decode("gbk")
+        if key in content:
             ret["matched_string"] = key
             ret["waf_detected"] = True
             return ret
@@ -128,7 +134,7 @@ def send_req(url, ipv6=True):
     
     return waf_func(resp, ret)
 
-def writeExcel(future_results):
+def writeExcel(future_results, future_to_url):
 
     # create excel
     file_name = time.strftime("%Y-%m-%d-%H-%M-%S.xlsx", time.localtime())
@@ -149,7 +155,7 @@ def writeExcel(future_results):
         try:
             data = future.result()
         except Exception as exc:
-            print('Exception: %s' % exc)
+            print(red + f'{future_to_url[future]} Exception: {exc}' + clear)
         else:
             print(data)
             for line in data:
@@ -177,19 +183,23 @@ if __name__ == "__main__":
 
         for url in url_list:
             url = url.strip()
+            if url == "":
+                continue
             future_to_url[executor.submit(send_req, url, False)] = url
         future_results = concurrent.futures.as_completed(future_to_url)
 
         # ipv6 checking...
-        proc = subprocess.run(["curl", "-6", "-s", "ifconfig.io"], stdout=subprocess.PIPE)
-        if ":" not in proc.stdout.decode():
-            print("Your network not support ipv6, it will detect ipv4 only. you can get ipv6 through mobile hotspot.\n")
-            writeExcel(future_results)
+        proc = subprocess.run(["curl", "-6", "https://ipv6.vm3.test-ipv6.com/ip/"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+        if "Could not resolve host" in proc.stderr.decode():
+            print(red + "Your network not support ipv6, it will detect ipv4 only. you can get ipv6 through mobile hotspot.\n" + clear)
+            writeExcel(future_results, future_to_url)
             exit()
         for url in url_list:
             url = url.strip()
+            if url == "":
+                continue
             aaaa_record = getipv6(tldextract.extract(url).fqdn) # TODO: 实现多线程
             if len(aaaa_record) != 0:
                 future_to_url[executor.submit(send_req, url, True)] = url
         future_results = concurrent.futures.as_completed(future_to_url)
-        writeExcel(future_results)
+        writeExcel(future_results, future_to_url)
