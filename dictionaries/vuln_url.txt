@@ -22,6 +22,7 @@ webui/?g=sys_dia_data_down&file_name=../../../../../../../../../../../../etc/pas
 etc/passwd
 .hg/hgrc
 .htaccess
+plugins/servlet/gadgets/makeRequest
 .htpasswd
 .idea/workspace.xml
 .ksh_history

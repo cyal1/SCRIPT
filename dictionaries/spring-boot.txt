@@ -1,3 +1,4 @@
+.env
 actuator
 actuator/archaius
 actuator/auditevents

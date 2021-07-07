@@ -23,6 +23,8 @@
 .0
 .3t/robo-3t/robo3t.key
 .7z
+plugins/servlet/gadgets/makeRequest
+plugins/servlet/gadgets/ifr
 ._machine.config
 ._web.config
 _utils/
