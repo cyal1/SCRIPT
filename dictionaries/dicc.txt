@@ -3,6 +3,7 @@
 !.htpasswd
 %20../
 %2e%2e//google.com
+service/LBEBusiness?wsdl
 %2e%2e;/test
 %2e%2e;test/
 %3f

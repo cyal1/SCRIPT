@@ -8,6 +8,7 @@ plugins/PluginConsole.do
 ..;/manager/html
 ./../../../../../../../../../../etc/passwd
 webui/?g=sys_dia_data_down&file_name=../../../../../../../../../../../../etc/passwd
+esp/cms_changeDeviceContext.esp
 .bash_history
 .bzr/branch/branch.conf
 .circleci/config.yml

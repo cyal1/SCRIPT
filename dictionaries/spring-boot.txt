@@ -15,7 +15,6 @@ actuator/features
 actuator/health
 actuator/health/**
 actuator/heapdump
-druid/websession.html
 actuator/httptrace
 actuator/hystrix.stream
 actuator/info
@@ -41,6 +40,7 @@ cloudfoundryapplication
 conditions
 configprops
 docs
+druid/websession.html
 dump
 env
 flyway
@@ -58,11 +58,14 @@ mappings
 metrics
 prometheus
 refresh
+routes
 scheduledtasks
 sessions
 spring-security-oauth-resource/swagger-ui.html
 spring-security-rest/api/swagger-ui.html
+swagger/index.html
 sw/swagger-ui.html
+swagger/index.yaml
 swagger-resources
 swagger-resources/configuration/security
 swagger-resources/configuration/ui
