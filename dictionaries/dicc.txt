@@ -26,6 +26,7 @@ service/LBEBusiness?wsdl
 .7z
 plugins/servlet/gadgets/makeRequest
 plugins/servlet/gadgets/ifr
+NCFindWeb?service=IPreAlertConfigService&filename=.
 ._machine.config
 ._web.config
 _utils/

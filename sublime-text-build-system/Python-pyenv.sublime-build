@@ -1,0 +1,4 @@
+{
+	"shell_cmd": "pyenv  exec  python \"$file\"",
+	"selector": "source.python"
+}

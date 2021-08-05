@@ -43,6 +43,7 @@ conditions
 configprops
 distv2/index.html
 docs
+druid/weburi.html
 druid/websession.html
 dubbo-provider/distv2/index.html
 dump

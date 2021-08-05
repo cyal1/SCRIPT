@@ -1,0 +1,5 @@
+{
+	"shell_cmd": "go run $file",
+	"selector": "source.go"
+}
+

@@ -1,0 +1,4 @@
+{
+	"shell_cmd": "nvm run --silent \"$file\"",
+	"selector": "source.js"
+}

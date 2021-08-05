@@ -27,6 +27,7 @@ plugins/servlet/gadgets/makeRequest
 .htpasswd
 .idea/workspace.xml
 .ksh_history
+NCFindWeb?service=IPreAlertConfigService&filename=.
 .redmine-cli
 .settings/rules.json
 .svn
@@ -454,7 +455,6 @@ nagiosql/admin/info.php
 nagiosql/admin/logbook.php
 nagiosql/admin/menuaccess.php
 names.nsf/People
-NCFindWeb
 nginx_status
 node/
 node/1

@@ -1,0 +1,4 @@
+{
+	"shell_cmd": "jenv exec javac $file && jenv exec java `echo $file_name|sed s/.java\\$//`",
+	"selector": "source.java"
+}
