@@ -1,4 +1,5 @@
 .env
+actuator/routes
 actuator
 actuator/archaius
 actuator/auditevents
