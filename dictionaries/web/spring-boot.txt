@@ -31,6 +31,7 @@ actuator/scheduledtasks
 actuator/service-registry
 actuator/threaddump
 api-docs
+api/docs/
 api.html
 api/index.html
 api/swagger-ui.html

@@ -12,7 +12,7 @@
 UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
 
 ### 扫描 swagger
-cat urls.txt|httpx -H "User-Agent: ${UA}" -paths '/swagger-resources,/v2/api-docs/,/api/swagger/index.yaml,/swagger/index.yaml' -title -status-code -content-length -content-type -follow-redirects -match-regex "swaggerVersion|\"swagger\":|swagger:"
+cat urls.txt|httpx -H "User-Agent: ${UA}" -paths '/api/docs/,/swagger-resources,/v2/api-docs/,/api/swagger/index.yaml,/swagger/index.yaml' -title -status-code -content-length -content-type -follow-redirects -match-regex "swaggerVersion|\"swagger\":|swagger:"
 
 ### 检测 shiro ffuf
 ffuf -w urls.txt -u FUZZ -H "User-Agent: ${UA}" -H "Cookie: rememberMe=test;" -mr "rememberMe=" -c 
