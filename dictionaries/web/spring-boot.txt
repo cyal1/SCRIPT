@@ -1,4 +1,6 @@
 .env
+doc.html
+swagger/ui/index
 actuator/routes
 actuator
 actuator/archaius
@@ -32,6 +34,7 @@ actuator/service-registry
 actuator/threaddump
 api-docs
 api/docs/
+api/docs/?format=openapi
 api.html
 api/index.html
 api/swagger-ui.html
