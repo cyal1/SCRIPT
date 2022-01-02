@@ -13111,6 +13111,9 @@ wp-content/updraft/
 wp-content/upgrade/
 wp-content/uploads/
 wp-content/uploads/aiowps_backups/
+wps/portal/
+wps/
+wps/PA_WCM_Authoring_UI/proxy/http/example.com
 wp-content/uploads/backupbuddy_backups/
 wp-content/uploads/backupbuddy_temp
 wp-content/uploads/dump.sql
