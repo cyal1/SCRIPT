@@ -1,10 +1,8 @@
 !.gitignore
-api/geojson?url=file:/etc/passwd
 !.htaccess
 !.htpasswd
 %20../
 %2e%2e//google.com
-service/LBEBusiness?wsdl
 %2e%2e;/test
 %2e%2e;test/
 %3f
@@ -25,14 +23,9 @@ service/LBEBusiness?wsdl
 .0
 .3t/robo-3t/robo3t.key
 .7z
-plugins/servlet/gadgets/makeRequest
-plugins/servlet/gadgets/ifr
-NCFindWeb?service=IPreAlertConfigService&filename=.
 ._machine.config
 ._web.config
-_utils/
 .abcdefghijklmnop/
-a/sys/register
 .accdb
 .access
 .ackrc
@@ -485,7 +478,6 @@ a/sys/register
 .git/FETCH_HEAD
 .git/HEAD
 .git/head
-.git/HEAD
 .git/hooks/
 .git/index
 .git/info/
@@ -528,7 +520,6 @@ a/sys/register
 .github/workflows/maven.yml
 .github/workflows/nodejs.yml
 .github/workflows/publish.yml
-.gitignore
 .gitignore
 .gitignore.orig
 .gitignore.swp
@@ -1944,6 +1935,7 @@ _tmp_war
 _tmp_war_DefaultWebApp
 _tracks
 _UpgradeReport_Files/
+_utils/
 _vti_adm
 _vti_adm/
 _vti_admin
@@ -2002,6 +1994,7 @@ a.tgz
 a.zip
 a/.git/config
 a/login/
+a/sys/register
 a/sys/user/modifyPwd
 a2e2gp2r2/x.jsp
 a4j/g/3_3_1.GAorg.richfaces.renderkit.html.Paint2DResource/DATA/
@@ -3107,6 +3100,7 @@ api/dev/applications
 api/dev/services
 api/env
 api/error_log
+api/geojson?url=file:/etc/passwd
 api/graph
 api/health
 api/host
@@ -5291,7 +5285,6 @@ config.ini.bak
 config.ini.old
 config.ini.txt
 config.js
-config.json
 config.json
 config.json.cfm
 config.jsp.xml
@@ -8955,6 +8948,7 @@ nbproject/project.xml
 ncadmin
 NCC-Shell.php
 nccloud
+NCFindWeb?service=IPreAlertConfigService&filename=.
 NCoverExplorer.exe.config
 Nec/
 nedp/
@@ -9953,6 +9947,8 @@ plugins/
 plugins/editors/fckeditor
 plugins/fckeditor
 plugins/PluginConsole.do
+plugins/servlet/gadgets/ifr
+plugins/servlet/gadgets/makeRequest
 plugins/servlet/oauth/users/icon-uri
 plugins/sfSWFUploadPlugin/web/sfSWFUploadPlugin/swf/swfupload.swf
 plugins/sfSWFUploadPlugin/web/sfSWFUploadPlugin/swf/swfupload_f9.swf
@@ -10189,6 +10185,7 @@ public/
 public/.env
 public/.git/config
 public/hot
+public/plugins/grafana-clock-panel/
 public/README.md
 public/storage
 public/system
@@ -10390,7 +10387,6 @@ research
 reseller
 reset
 reset.html
-resin-admin/
 resin-admin/
 resin-admin/index.php
 resin-doc/
@@ -10625,7 +10621,6 @@ science
 sconfig.php
 screenshots
 script
-script
 script/
 script/.env
 script/jqueryplugins/dataTables/extras/TableTools/media/swf/ZeroClipboard.swf
@@ -10815,6 +10810,7 @@ service-registry/instance-status.json
 service.asmx
 service.grp
 service.pwd
+service/LBEBusiness?wsdl
 service/rest/swagger.json
 service/siesta/swagger.json
 serviceaccount.crt
@@ -10902,7 +10898,6 @@ setup.sh
 setup.sql
 setup/
 seven/
-sftp-config.json
 sftp-config.json
 sftp.json
 Sh3ll.php
@@ -12996,8 +12991,8 @@ webstats/
 webtalk.log
 webticket/
 webticket/webticketservice.svc
-webui/.env
 webui/
+webui/.env
 weburi.json
 wechat/
 wechatTrade/
