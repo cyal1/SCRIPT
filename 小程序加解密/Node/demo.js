@@ -1,9 +1,9 @@
 var WXBizDataCrypt = require('./WXBizDataCrypt')
 
-var appId = 'wxcf86b7777ec88caf'
-var sessionKey = 'bLPULqbwwWmq2FmYTcTEMg=='
-var encryptedData ='Tcoy6tZnGFusGt0gTTZ6LCP/eEZ8TRmX0DaxBNErMGrs+HIZo157zvGUwjzSjKDyXu9ZpBvqtPT282u3KFEoSc7USxSMvKocEiZOr/vXC2GBbHRX5r69f9bQwVjKYyrqiXcWupqBoU+0Pfsaoginc4+k+pgW0BCoyzNHWSTBBE4uoXLK/2n16I1NRENsU8k711uxcH/L1vCFJ00B4zTNeA=='
-var iv = 'E6ZUIw3qAhTvkF8L0K8Beg=='
+var appId = 'wx1225006d58ea6ac4'
+var sessionKey = 'XJ35NxgRnPCylazcGIBM+g=='
+var encryptedData ='PyUXvlR3uZDTNQ46S6HSU66zlkqhbudVP4Wl5eN7fs8NZJ1s8ZsM7COQTj3+5nDnD9i11IYp7p9HPqQ7vytTUVvwqPNQCEG+y+zzp3d/b2VmZugj0sSbJ9uMauAA+Q5Zw+UdrXnWLavIOEJ0INJVip/PCrvNcpi5szEC6nMeh4c4IsvpgtGnIkkR9+MYgzQmm/C7rswcDyqmIZ+fc61DSw=='
+var iv = 'GnSxNEeHYWeKQNCrilqhUg=='
 
 var pc = new WXBizDataCrypt(appId, sessionKey)
 

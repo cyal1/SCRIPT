@@ -18,6 +18,7 @@ class WXBizDataCrypt:
         decrypted = json.loads(self._unpad(cipher.decrypt(encryptedData)))
 
         if decrypted['watermark']['appid'] != self.appId:
+            print(decrypted)
             raise Exception('Invalid Buffer')
 
         return decrypted
