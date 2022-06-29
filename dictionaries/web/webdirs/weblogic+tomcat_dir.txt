@@ -1,9 +1,5 @@
-..;/host-manager/html
-..;/manager/html
 %2e%2e;/test
 %2e%2e;test/
-..;/
-..;/examples/
 *
 *.gif
 *.gif/
@@ -16,6 +12,10 @@
 *.portlet
 *.render
 *.shtml/
+..;/
+..;/examples/
+..;/host-manager/html
+..;/manager/html
 _async
 _async/AsyncResponseService
 _async/AsyncResponseServiceHttps

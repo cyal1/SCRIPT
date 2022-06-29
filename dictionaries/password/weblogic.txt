@@ -1,0 +1,11 @@
+admin/security
+joe/password
+mary/password
+system/password
+system/security
+weblogic/weblogic
+weblogic/welcom
+weblogic/welcom1
+weblogic1/weblogic
+wlcsystem/wlcsystem
+wlpisystem/wlpisystem
