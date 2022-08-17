@@ -1,4 +1,10 @@
 .env
+version
+v2
+v2/_catalog
+openapi/v2
+openapi/
+openapi/v3
 __swagger__/
 _swagger_/
 actuator

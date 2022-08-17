@@ -1,4 +1,5 @@
 %2e%2e;/test
+%C0%AE%C0%AE/%C0%AE%C0%AE/WEB-INF/web.xml
 %2e%2e;test/
 *
 *.gif

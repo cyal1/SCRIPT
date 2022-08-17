@@ -1223,6 +1223,7 @@
 .ssh/pi_rsa.pub
 .st_cache/
 .stack-work/
+%C0%AE%C0%AE/%C0%AE%C0%AE/WEB-INF/web.xml
 .stat/
 .stats/
 .stestr.conf
@@ -6816,6 +6817,7 @@ fileadmin/_temp_/
 fileadmin/user_upload/
 filedump/
 FileHandler/
+filekjzd/laravel-u-editor-server/server
 filemanager
 filemanager/
 filemanager/views/js/ZeroClipboard.swf
@@ -7988,6 +7990,8 @@ lang/web.config
 langrh/
 language
 languages
+laravel-u-editor-server
+laravel-u-editor-server/server
 laravel.log
 laravel/.env
 laravel5.sql
@@ -12070,10 +12074,20 @@ uddilistener
 uddisoap/
 udp.php
 ueditor/
+ueditor/asp/controller.asp?action=uploadfile
+ueditor/asp/controller.asp?action=uploadimage
 ueditor/index.html
 ueditor/jsp/config.json
+ueditor/jsp/controller.jsp?action=uploadfile
+ueditor/jsp/controller.jsp?action=uploadimage
 ueditor/net/config.json
+ueditor/net/controller.ashx?action=listfile
+ueditor/net/controller.ashx?action=listimage
+ueditor/net/controller.ashx?action=uploadfile
+ueditor/net/controller.ashx?action=uploadimage
 ueditor/php/config.json
+ueditor/php/controller.php?action=uploadfile
+ueditor/php/controller.php?action=uploadimage
 ueditor/php/getRemoteImage.php
 ueditor/ueditor.config.js
 ufsoft/
@@ -13111,9 +13125,6 @@ wp-content/updraft/
 wp-content/upgrade/
 wp-content/uploads/
 wp-content/uploads/aiowps_backups/
-wps/portal/
-wps/
-wps/PA_WCM_Authoring_UI/proxy/http/example.com
 wp-content/uploads/backupbuddy_backups/
 wp-content/uploads/backupbuddy_temp
 wp-content/uploads/dump.sql
@@ -13155,6 +13166,9 @@ wp.zip
 wp/
 wp/wp-login.php
 wpad.dat
+wps/
+wps/PA_WCM_Authoring_UI/proxy/http/example.com
+wps/portal/
 ws
 ws.php
 ws/
