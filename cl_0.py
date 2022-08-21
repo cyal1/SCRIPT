@@ -13,7 +13,11 @@ UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like 
 def detect_cl_0(url, path=None):
     u = parse_url(url)
     if path is None:
-        path = u.path
+        path = u.path if u.path is not None else '/'
+    target = u.scheme + "://" + u.host
+    if u.port is not None:
+        target += ':' + str(u.port)
+    target += path
     if u.scheme == 'https':
         conn = HTTPSConnectionPool(u.host, u.port if u.port is not None else 443, cert_reqs='CERT_NONE',
                                    assert_hostname=False)
@@ -29,7 +33,7 @@ def detect_cl_0(url, path=None):
                                     "User-Agent": UA
                                 })
     except Exception as e:
-        print(e)
+        print(url, e)
         # pass
     else:
         base_status, base_len = base_req.status, len(base_req.data)
@@ -55,7 +59,7 @@ def detect_cl_0(url, path=None):
 
         if base_status != victim.status:
             print(
-                f"\033[91m{url}, path:{path}, attacker:{attacker.status, len(victim.data)}, baseline:{base_status, base_len}, "
+                f"\033[91m{target}, baseline:{base_status, base_len}, attacker:{attacker.status, len(victim.data)}, "
                 f"victim:{victim.status, len(victim.data)}, CL.0 detected!\033[0m")
             print("HTTP/" + str(victim.version / 10), victim.status, victim.reason)
             print('\r\n'.join([k + ': ' + victim.headers[k] for k in victim.headers]))
@@ -63,11 +67,12 @@ def detect_cl_0(url, path=None):
 
         elif base_len != len(victim.data):
             print(
-                f"\033[93m{url}, path:{path}, attacker:{attacker.status, len(victim.data)}, baseline:{base_status, base_len}, "
+                f"\033[93m{target}, baseline:{base_status, base_len}, attacker:{attacker.status, len(victim.data)}, "
                 f"victim:{victim.status, len(victim.data)}, CL.0 detected!\033[0m")
         else:
+            pass
             print(
-                f"{url}, path:{path}, attacker:{attacker.status, len(victim.data)}, baseline:{base_status, base_len}, "
+                f"{target}, baseline:{base_status, base_len}, attacker:{attacker.status, len(victim.data)}, "
                 f"victim:{victim.status, len(victim.data)}, CL.0 Not Found")
     finally:
         conn.close()
