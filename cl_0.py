@@ -79,7 +79,7 @@ def detect_cl_0(url, path=None):
 
 
 victim_method = "GET"
-attacker_method = "POST"
+attacker_method = "GET"
 timeout = 35
 endpoint = '/favicon.ico'  # set endpoint None to use the url path.  /static/css/*.css , redirect / /en , /../
 
@@ -89,5 +89,15 @@ if len(sys.argv) > 1:
         exit(0)
     else:
         endpoint = sys.argv[1]
+
+if sys.stdin.isatty():
+    print("""
+Usage:
+    1. cat urls.txt|python3 cl_0.py   # default use /favicon.ico
+    2. cat urls.txt|python3 cl_0.py /robots.txt 
+    3. python3 cl_0.py https://www.example.com/static/index.css
+        """)
+    exit()
+
 with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
     future_to_url = {executor.submit(detect_cl_0, url.strip(), endpoint): url.strip() for url in sys.stdin}
