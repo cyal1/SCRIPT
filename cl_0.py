@@ -42,7 +42,7 @@ def detect_cl_0(url, path=None):
                                 redirect=False,
                                 retries=0,
                                 timeout=timeout,
-                                body="a b %",
+                                body=smuggle_data,
                                 headers={
                                     # "Content-Length": "10",
                                     "Connection": "keep-alive",
@@ -80,6 +80,7 @@ def detect_cl_0(url, path=None):
 
 victim_method = "GET"
 attacker_method = "GET"
+smuggle_data = "a b %"
 timeout = 35
 endpoint = '/favicon.ico'  # set endpoint None to use the url path.  /static/css/*.css , redirect / /en , /../
 
