@@ -80,7 +80,7 @@ def detect_cl_0(url, path=None):
 
 victim_method = "GET"
 attacker_method = "GET"
-smuggle_data = "a b %" # body
+smuggle_data = "a % b" # body
 timeout = 35
 endpoint = '/favicon.ico'  # set endpoint None to use the url path.  /static/css/*.css , redirect / /en , /../
 
