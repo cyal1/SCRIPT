@@ -141,3 +141,4 @@ v2/api-docs
 v2/swagger.json
 v3/api-docs
 webpage/system/druid/websession.html
+classicapi/doc/

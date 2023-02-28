@@ -1,0 +1,6 @@
+filename="test.j\sp"
+filename="test.j\spz
+filename="test.jsp/././."
+filename="test.jsp/./"
+filename="test.jsp/"
+filename="test.jsp/filename"
