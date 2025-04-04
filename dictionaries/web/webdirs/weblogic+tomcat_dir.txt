@@ -13,6 +13,7 @@
 *.portlet
 *.render
 *.shtml/
+%5C../
 ..;/
 ..;/examples/
 ..;/host-manager/html
